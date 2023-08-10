@@ -19,7 +19,7 @@ function isAuthorized(url) {
 }
 
 let weather = {
-    "apiKey": "b7009dd707ccd3607889bac244c06116",
+    "apiKey": "26938f5feb2983279ca1b7b236046759",
     fetchWeather: function(city){
         flag = false;
         if(city == null){
