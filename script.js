@@ -8,19 +8,40 @@ function UrlExists(url) {
         return false;
 }
 
+function isAuthorized(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status != 401)
+        return true;
+    else
+        return false;
+}
+
 let weather = {
     "apiKey": "b7009dd707ccd3607889bac244c06116",
     fetchWeather: function(city){
+        flag = false;
+        if(city == null){
+            alert("Please enter a city name!");
+            flag = true;
+            return;
+        }
+
         url = "https://api.openweathermap.org/data/2.5/weather?q="+city
         + "&units=metric&appid=" + this.apiKey;
-        UrlExists(url) ?  fetch(
-            "https://api.openweathermap.org/data/2.5/weather?q="+city 
-            + "&units=metric&appid=" + this.apiKey).then((response) => response.json())
-            .then((data) => this.displayWeather(data))
-            : alert("No such city, please make sure that you've typed it in correctly!");
+        UrlExists(url)
+        ? isAuthorized(url)
+          ? fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + this.apiKey)
+              .then((response) => response.json())
+              .then((data) => this.displayWeather(data))
+              .catch((error) => console.error("Error fetching weather data:", error))
+          : alert("Invalid API key has been provided!")
+        : alert("No such city, please make sure that you've typed it in correctly!");
         },
 
     displayWeather: function(data){
+            if(flag) {return; }
             const {name} = data;
             const {icon, description} = data.weather[0];
             const {temp, humidity} = data.main;
@@ -37,6 +58,7 @@ let weather = {
     },
 
     search: function(){
+        if(flag) {return;}
             this.fetchWeather(document.querySelector(".search-bar").value);
     }
 }
