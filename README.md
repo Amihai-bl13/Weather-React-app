@@ -6,4 +6,4 @@ In order to use this application/website and test it by yourself, you should rep
 with your Api key
 (you can create a new one for yourself (for free) here: https://home.openweathermap.org/), since the provided key is inactive. 
 
-Notice: you should wait out a couple of hours after creating the key, since it can take a while to be approved. 
+Notice: you should wait out a couple of hours after the creation of the key, since it can take a while to be approved. 
